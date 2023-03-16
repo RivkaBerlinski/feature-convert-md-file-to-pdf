@@ -1,8 +1,10 @@
 FROM node:16.19.1-buster
 
-RUN npm install -g markdown-pdf
+WORKDIR /app
 
-WORKDIR /ConvertMdToPdfProject
+COPY package*.json ./
+
+RUN npm install
 
 COPY ./index.js .
 
