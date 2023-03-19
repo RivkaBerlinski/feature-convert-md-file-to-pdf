@@ -4,18 +4,15 @@ const fs = require('fs');
 const filename = process.argv[2];
 
 if(!filename){
-  console.error('Error: You must provide a filename as an argument');
-  process.exit(1);
+  throw new Error(`You must provide a filename as an argument`)
 }
 
 if(!fs.existsSync(filename)){
-  console.error(`Error: File '${filename}' does not exist`);
-  process.exit(1);
+  throw new Error(`File '${filename}' does not exist`)
 }
 
 if(Path.extname(filename) !== '.md'){
-  console.error(`Error: File '${filename}' is not a Markdown file`);
-  process.exit(1);
+  throw new Error(`File '${filename}' is not a Markdown file`)
 }
 
 const markdown = fs.readFileSync(filename, 'utf8');
