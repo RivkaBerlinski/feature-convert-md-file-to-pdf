@@ -4,15 +4,18 @@ const fs = require('fs');
 const filename = process.argv[2];
 
 if(!filename){
-  throw new MissingFilename("Error: You must provide a filename as an argument");
+  console.error('Error: You must provide a filename as an argument');
+  process.exit(1);
 }
 
 if(!fs.existsSync(filename)){
-  throw new ExistFilename("Error: File '${filename}' does not exist");
+  console.error(`Error: File '${filename}' does not exist`);
+  process.exit(1);
 }
 
 if(Path.extname(filename) !== '.md'){
-  throw new FileTypeError("Error: File '${filename}' is not a Markdown file");
+  console.error(`Error: File '${filename}' is not a Markdown file`);
+  process.exit(1);
 }
 
 const markdown = fs.readFileSync(filename, 'utf8');
@@ -21,22 +24,3 @@ markdownpdf().from.string(markdown).to('output.pdf', function () {
   console.log('PDF created');
 });
 
-
-class MissingFilename extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "MissingFilename";
-  }
-  }
-class ExistFilename extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "ExistFilename";
-  }
-  }
-class FileTypeError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "FileTypeError";
-  }
-  }
